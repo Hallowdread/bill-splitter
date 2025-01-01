@@ -31,6 +31,7 @@ function App() {
     <div className="app">
       <div className="sidebar">
         <FriendList friends={friends} />
+        <FormAddFriend />
       </div>
     </div>
   );
@@ -65,6 +66,20 @@ const Friend = ({ friend }) => {
 
       <Button>Select</Button>
     </li>
+  );
+};
+
+const FormAddFriend = () => {
+  return (
+    <form className="form-add-friend">
+      <label htmlFor="friendName">👫Friend Name</label>
+      <input type="text" />
+
+      <label htmlFor="imageURL">📸Image URL</label>
+      <input type="text" />
+
+      <Button>Add</Button>
+    </form>
   );
 };
 
