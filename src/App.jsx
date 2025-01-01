@@ -21,6 +21,10 @@ const initialFriends = [
   },
 ];
 
+const Button = ({ children }) => {
+  return <button className="button">{children}</button>;
+};
+
 function App() {
   const [friends, setFriends] = useState(initialFriends);
   return (
@@ -58,6 +62,8 @@ const Friend = ({ friend }) => {
         </p>
       )}
       {friend.balance === 0 && <p>You and {friend.name} are even</p>}
+
+      <Button>Select</Button>
     </li>
   );
 };
