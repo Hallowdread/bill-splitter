@@ -38,7 +38,7 @@ export const FormSplitBill = ({ selectedFriend }) => {
       <input type="text" value={friendExpense} disabled />
 
       <label>Who is playing the bill</label>
-      <select>
+      <select value={whoIsPlaying} onChange={(e) => setBill(e.target.value)}>
         <option value="user">You</option>
         <option value="friend">{selectedFriend.name}</option>
       </select>
