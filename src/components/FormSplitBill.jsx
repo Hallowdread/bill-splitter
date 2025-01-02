@@ -6,18 +6,36 @@ export const FormSplitBill = ({ selectedFriend }) => {
   const [userExpense, setUserExpense] = useState("");
   const friendExpense = bill ? bill - userExpense : "";
   const [whoIsPlaying, setWhoIsPlaying] = useState("user");
+  //
+  function handleSubmit(e) {
+    e.preventDefault();
+    //
+    console.log(bill);
+  }
   return (
-    <form className="form-split-bill">
+    <form className="form-split-bill" onSubmit={handleSubmit}>
       <h2>Split Bill With {selectedFriend.name}</h2>
 
       <label htmlFor="billValue">💰 Bill Value</label>
-      <input type="number" />
+      <input
+        type="text"
+        value={bill}
+        onChange={(e) => setBill(Number(e.target.value))}
+      />
 
       <label htmlFor="userExpense">🕴🏾 Your Expense</label>
-      <input type="number" />
+      <input
+        type="text"
+        value={userExpense}
+        onChange={(e) =>
+          setUserExpense(
+            Number(e.target.value) > bill ? userExpense : Number(e.target.value)
+          )
+        }
+      />
 
       <label htmlFor="friendExpense">👫 {selectedFriend.name}'s Expense</label>
-      <input type="number" />
+      <input type="text" value={friendExpense} disabled />
 
       <label>Who is playing the bill</label>
       <select>
