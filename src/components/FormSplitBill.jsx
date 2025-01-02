@@ -1,6 +1,11 @@
+import { useState } from "react";
 import { Button } from "../App";
 
 export const FormSplitBill = ({ selectedFriend }) => {
+  const [bill, setBill] = useState("");
+  const [userExpense, setUserExpense] = useState("");
+  const friendExpense = bill ? bill - userExpense : "";
+  const [whoIsPlaying, setWhoIsPlaying] = useState("user");
   return (
     <form className="form-split-bill">
       <h2>Split Bill With {selectedFriend.name}</h2>
