@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { FriendList } from "./components/FriendList";
+import { FormAddFriend } from "./components/FormAddFriend";
 
 const initialFriends = [
   {
@@ -21,7 +23,7 @@ const initialFriends = [
   },
 ];
 
-const Button = ({ children, onClick }) => {
+export const Button = ({ children, onClick }) => {
   return (
     <button className="button" onClick={onClick}>
       {children}
@@ -29,7 +31,7 @@ const Button = ({ children, onClick }) => {
   );
 };
 
-function App() {
+export default function App() {
   const [friends, setFriends] = useState(initialFriends);
   const [showAddFriend, setShowAddFriend] = useState(false);
   //
@@ -54,76 +56,3 @@ function App() {
     </div>
   );
 }
-
-const FriendList = ({ friends }) => {
-  return (
-    <ul>
-      {friends.map((friend) => (
-        <Friend friend={friend} key={friend.id} />
-      ))}
-    </ul>
-  );
-};
-
-const Friend = ({ friend }) => {
-  return (
-    <li>
-      <img src={friend.image} alt={friend.name} />
-      <h3>{friend.name}</h3>
-      {friend.balance < 0 && (
-        <p className="red">
-          You owe {friend.name} {Math.abs(friend.balance)}€
-        </p>
-      )}
-      {friend.balance > 0 && (
-        <p className="green">
-          {friend.name} owes you {friend.balance}€
-        </p>
-      )}
-      {friend.balance === 0 && <p>You and {friend.name} are even</p>}
-
-      <Button>Select</Button>
-    </li>
-  );
-};
-
-const FormAddFriend = ({ onAddNewFriend }) => {
-  const [name, setName] = useState("");
-  const [image, setImage] = useState("https://i.pravatar.cc/48");
-  //
-  function handleSubmit(e) {
-    e.preventDefault();
-    //
-    if (!name || !image) return;
-    //
-    const id = crypto.randomUUID();
-    const newFriend = {
-      name,
-      image: `${image}?=${id}`,
-      balance: 0,
-      id,
-    };
-    onAddNewFriend(newFriend);
-  }
-  return (
-    <form className="form-add-friend" onSubmit={handleSubmit}>
-      <label htmlFor="friendName">👫Friend Name</label>
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-
-      <label htmlFor="imageURL">📸Image URL</label>
-      <input
-        type="text"
-        value={image}
-        onChange={(e) => setImage(e.target.value)}
-      />
-
-      <Button>Add</Button>
-    </form>
-  );
-};
-
-export default App;
