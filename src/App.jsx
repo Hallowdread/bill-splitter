@@ -36,11 +36,17 @@ function App() {
   function handleShowAddFriend() {
     setShowAddFriend((show) => !show);
   }
+  //
+  function handleAddNewFriend(friend) {
+    setFriends((friends) => [...friends, friend]);
+    setShowAddFriend(false);
+  }
+  //
   return (
     <div className="app">
       <div className="sidebar">
         <FriendList friends={friends} />
-        {showAddFriend && <FormAddFriend />}
+        {showAddFriend && <FormAddFriend onAddNewFriend={handleAddNewFriend} />}
         <Button onClick={handleShowAddFriend}>
           {showAddFriend ? "Close" : "Add Friend"}
         </Button>
@@ -81,14 +87,39 @@ const Friend = ({ friend }) => {
   );
 };
 
-const FormAddFriend = () => {
+const FormAddFriend = ({ onAddNewFriend }) => {
+  const [name, setName] = useState("");
+  const [image, setImage] = useState("https://i.pravatar.cc/48");
+  //
+  function handleSubmit(e) {
+    e.preventDefault();
+    //
+    if (!name || !image) return;
+    //
+    const id = crypto.randomUUID();
+    const newFriend = {
+      name,
+      image: `${image}?=${id}`,
+      balance: 0,
+      id,
+    };
+    onAddNewFriend(newFriend);
+  }
   return (
-    <form className="form-add-friend">
+    <form className="form-add-friend" onSubmit={handleSubmit}>
       <label htmlFor="friendName">👫Friend Name</label>
-      <input type="text" />
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
 
       <label htmlFor="imageURL">📸Image URL</label>
-      <input type="text" />
+      <input
+        type="text"
+        value={image}
+        onChange={(e) => setImage(e.target.value)}
+      />
 
       <Button>Add</Button>
     </form>
