@@ -1,17 +1,23 @@
 import { Button } from "../App";
 
-export const FriendList = ({ friends }) => {
+export const FriendList = ({ friends, selectedFriend, onSelectedFriend }) => {
   return (
     <ul>
       {friends.map((friend) => (
-        <Friend friend={friend} key={friend.id} />
+        <Friend
+          friend={friend}
+          key={friend.id}
+          selectedFriend={selectedFriend}
+          onSelectedFriend={onSelectedFriend}
+        />
       ))}
     </ul>
   );
 };
-const Friend = ({ friend }) => {
+const Friend = ({ friend, selectedFriend, onSelectedFriend }) => {
+  const isSelected = selectedFriend && selectedFriend.id === friend.id;
   return (
-    <li>
+    <li className={isSelected ? "selected" : ""}>
       <img src={friend.image} alt={friend.name} />
       <h3>{friend.name}</h3>
       {friend.balance < 0 && (
@@ -26,7 +32,9 @@ const Friend = ({ friend }) => {
       )}
       {friend.balance === 0 && <p>You and {friend.name} are even</p>}
 
-      <Button>Select</Button>
+      <Button onClick={() => onSelectedFriend(friend)}>
+        {isSelected ? "Close" : "Select"}
+      </Button>
     </li>
   );
 };
